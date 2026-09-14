@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><style>body{margin:0;background:#000;font-family:-apple-system,"SF Pro Text",system-ui,sans-serif}a{color:#ff453a}a:hover{color:#ff6b62}@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}</style></helmet>
+<div style="min-height:100vh;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:48px;padding:40px 20px;box-sizing:border-box;background:#000">
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="position:relative;height:100%;background:#000;overflow:hidden">
+
+<div style="position:sticky;top:0;z-index:10;background:rgba(0,0,0,0.9);backdrop-filter:blur(18px);padding:56px 0 0">
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:0 20px 10px">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:30px;font-weight:700;letter-spacing:-0.6px;color:#fff">{{ headerMonth }}</div>
+<div style="font-family:-apple-system,system-ui;font-size:17px;font-weight:400;color:#ff453a">{{ headerYear }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);padding:0 8px 8px">
+<sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+<div style="text-align:center;font-family:-apple-system,system-ui;font-size:11px;font-weight:600;letter-spacing:0.4px;color:#8e8e93;text-transform:uppercase">{{ w.label }}</div>
+</sc-for>
+</div>
+<div style="height:0.5px;background:rgba(255,255,255,0.18)"></div>
+</div>
+
+<div style="padding:8px 8px 60px">
+<sc-for list="{{ months }}" as="m" hint-placeholder-count="3">
+<div style="padding:14px 0 18px">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:22px;font-weight:700;letter-spacing:-0.4px;color:#fff;padding:0 12px 10px">{{ m.label }}</div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);row-gap:6px">
+<sc-for list="{{ m.cells }}" as="d" hint-placeholder-count="35">
+<div onClick="{{ d.onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:2px 0;cursor:pointer">
+<div style="width:36px;height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-family:-apple-system,'SF Pro Display',system-ui;font-size:19px;font-weight:{{ d.weight }};letter-spacing:-0.3px;background:{{ d.bg }};color:{{ d.color }};box-shadow:{{ d.ring }};text-shadow:{{ d.tsh }}">{{ d.num }}</div>
+<div style="width:6px;height:6px;border-radius:3px;margin-top:4px;background:{{ d.tiquetDot }}"></div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ close }}" style="position:absolute;inset:0;z-index:40;background:rgba(0,0,0,0.6)"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;z-index:50;background:#1c1c1e;border-radius:22px 22px 0 0;padding:10px 20px 40px;animation:sheetUp 0.28s cubic-bezier(0.32,0.72,0,1)">
+<div style="width:38px;height:5px;border-radius:3px;background:rgba(255,255,255,0.25);margin:0 auto 18px"></div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#fff">{{ sheetTitle }}</div>
+<div onClick="{{ close }}" style="font-family:-apple-system,system-ui;font-size:17px;color:#ff453a;cursor:pointer">Fet</div>
+</div>
+<div style="font-family:-apple-system,system-ui;font-size:15px;color:#8e8e93;margin-bottom:20px">{{ periodTitle }}</div>
+<sc-if value="{{ showPeriods }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ periods }}" as="p" hint-placeholder-count="3">
+<div onClick="{{ p.onClick }}" style="display:flex;align-items:center;gap:14px;border-radius:16px;padding:18px 20px;cursor:pointer;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1)">
+<div style="width:10px;height:10px;border-radius:5px;flex:none;background:{{ p.chip }}"></div>
+<div style="flex:1;min-width:0">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:20px;font-weight:600;letter-spacing:-0.3px;color:#fff">{{ p.label }}</div>
+<div style="font-family:-apple-system,system-ui;font-size:13px;color:#8e8e93;margin-top:2px">{{ p.hint }}</div>
+</div>
+<div style="font-family:-apple-system,system-ui;font-size:15px;font-weight:500;color:{{ p.valueInk }}">{{ p.value }}</div>
+<div style="font-size:17px;font-weight:600;color:{{ p.arrowInk }}">{{ p.arrow }}</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showCountry }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ back }}" style="font-family:-apple-system,system-ui;font-size:15px;color:#ff453a;cursor:pointer;margin-bottom:14px">‹ Dia · Nit</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div onClick="{{ pickAndorra }}" style="position:relative;border-radius:18px;padding:26px 22px;cursor:pointer;background:{{ andorraBg }};border:2px solid {{ andorraBorder }}">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:24px;font-weight:600;letter-spacing:-0.3px;color:{{ andorraInk }}">Andorra</div>
+<div style="position:absolute;top:26px;right:22px;font-size:22px;color:{{ andorraInk }};font-weight:600">{{ andorraCheck }}</div>
+</div>
+<div onClick="{{ pickEspanya }}" style="position:relative;border-radius:18px;padding:26px 22px;cursor:pointer;background:{{ espanyaBg }};border:2px solid {{ espanyaBorder }}">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:24px;font-weight:600;letter-spacing:-0.3px;color:{{ espanyaInk }}">Espanya</div>
+<div style="position:absolute;top:26px;right:22px;font-size:22px;color:{{ espanyaInk }};font-weight:600">{{ espanyaCheck }}</div>
+</div>
+</div>
+</sc-if>
+<div onClick="{{ clearDay }}" style="text-align:center;margin-top:18px;font-family:-apple-system,system-ui;font-size:15px;color:#8e8e93;cursor:pointer">Esborra</div>
+</div>
+</sc-if>
+
+</div>
+</x-import>
+<div style="font-family:-apple-system,system-ui;font-size:12px;color:#636366">Calendari · fitxa inferior</div>
+</div>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ true }}" hint-size="402px,874px">
+<div style="height:100%;background:#000;display:flex;flex-direction:column;padding:0">
+<div style="padding:70px 24px 18px">
+<div style="font-family:-apple-system,system-ui;font-size:13px;font-weight:600;letter-spacing:1.4px;color:#8e8e93;text-transform:uppercase">{{ altDateLabel }}</div>
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:34px;font-weight:700;letter-spacing:-0.8px;color:#fff;margin-top:6px">On ets avui?</div>
+</div>
+<div style="flex:1;display:grid;grid-template-rows:1fr 1fr;gap:16px;padding:0 16px 40px">
+<div style="position:relative;border-radius:26px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;background:{{ altAndorraBg }};border:1.5px solid {{ altAndorraBorder }};overflow:hidden">
+<div style="position:absolute;top:26px;right:26px;width:26px;height:26px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:{{ altAndorraDotInk }};background:{{ altAndorraDot }}">{{ altAndorraCheck }}</div>
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:40px;font-weight:700;letter-spacing:-1px;color:{{ altAndorraInk }}">Andorra</div>
+<div style="display:flex;align-items:baseline;gap:14px;margin-top:10px">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:30px;font-weight:700;letter-spacing:-0.6px;font-size:24px;color:{{ altAndorraInk }}">{{ altAndorraDays }}</div>
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:30px;font-weight:400;letter-spacing:-0.6px;color:{{ altAndorraSub }}">{{ altAndorraPct }}</div>
+</div>
+<div style="font-family:-apple-system,system-ui;font-size:14px;color:{{ altAndorraSub }};margin-top:2px">{{ altAndorraCount }}</div>
+</div>
+<div style="position:relative;border-radius:26px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;background:{{ altEspanyaBg }};border:1.5px solid {{ altEspanyaBorder }};overflow:hidden">
+<div style="position:absolute;top:26px;right:26px;width:26px;height:26px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:{{ altEspanyaDotInk }};background:{{ altEspanyaDot }}">{{ altEspanyaCheck }}</div>
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:40px;font-weight:700;letter-spacing:-1px;color:{{ altEspanyaInk }}">Espanya</div>
+<div style="display:flex;align-items:baseline;gap:14px;margin-top:10px">
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:30px;font-weight:700;letter-spacing:-0.6px;font-size:24px;color:{{ altEspanyaInk }}">{{ altEspanyaDays }}</div>
+<div style="font-family:-apple-system,'SF Pro Display',system-ui;font-size:30px;font-weight:400;letter-spacing:-0.6px;color:{{ altEspanyaSub }}">{{ altEspanyaPct }}</div>
+</div>
+<div style="font-family:-apple-system,system-ui;font-size:14px;color:{{ altEspanyaSub }};margin-top:2px">{{ altEspanyaCount }}</div>
+</div>
+</div>
+</div>
+</x-import>
+<div style="font-family:-apple-system,system-ui;font-size:12px;color:#636366">Pantalla completa · dues caselles</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;andorraColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#34c759&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#34c759&quot;,&quot;#30d158&quot;,&quot;#1f9d55&quot;]},&quot;espanyaColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ff3b30&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#ff3b30&quot;,&quot;#ff453a&quot;,&quot;#c9184a&quot;]},&quot;tiquetColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ff9f0a&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#ff9f0a&quot;,&quot;#ffb340&quot;,&quot;#ff7a00&quot;]}}">
+const MESOS = ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre'];
+
+class Component extends DCLogic {
+  state = { open: false, sel: null, marks: {}, alt: null, period: null };
+
+  colorOf(v) { return v === 'AD' ? this.green : v === 'ES' ? this.red : null; }
+
+  dayFill(day) {
+    if (!day) return null;
+    const cs = ['dia','nit'].map(k => this.colorOf(day[k]));
+    const set = cs.filter(Boolean);
+    if (!set.length) return null;
+    if (set.length === 2 && cs[0] === cs[1]) return cs[0];
+    const seg = cs.map(c => c || 'rgba(255,255,255,0.10)');
+    return 'linear-gradient(180deg,' + seg[0] + ' 0 50%,' + seg[1] + ' 50% 100%)';
+  }
+
+  dayInk(day) {
+    if (!day) return '#fff';
+    const cs = ['dia','nit'].map(k => this.colorOf(day[k]));
+    if (cs[0] && cs[0] === cs[1] && day.dia === 'AD') return '#04240f';
+    return '#fff';
+  }
+
+  setPeriod(mark) {
+    const id = this.state.sel, p = this.state.period;
+    if (!id || !p) return;
+    this.setState(s => {
+      const day = { ...(s.marks[id] || {}) };
+      day[p] = day[p] === mark ? undefined : mark;
+      return { marks: { ...s.marks, [id]: day } };
+    });
+  }
+
+  get green() { return this.props.andorraColor ?? '#34c759'; }
+  get red() { return this.props.espanyaColor ?? '#ff3b30'; }
+  get orange() { return this.props.tiquetColor ?? '#ff9f0a'; }
+
+  monthData(year, month) {
+    const first = new Date(year, month, 1);
+    const start = (first.getDay() + 6) % 7;
+    const days = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < start; i++) cells.push({ key: 'b' + i, num: '', bg: 'transparent', color: 'transparent', dot: 'transparent', weight: 400, onClick: null });
+    const today = new Date(2026, 8, 13);
+    for (let d = 1; d <= days; d++) {
+      const id = year + '-' + month + '-' + d;
+      const isToday = year === today.getFullYear() && month === today.getMonth() && d === today.getDate();
+      const isSel = this.state.sel === id;
+      const mark = this.state.marks[id];
+      const markBg = this.dayFill(mark);
+      cells.push({
+        key: id, num: String(d),
+        weight: markBg || isToday || isSel ? 600 : 400,
+        bg: markBg ? markBg : (isSel ? 'rgba(255,255,255,0.18)' : (isToday ? 'rgba(255,69,58,0.22)' : 'transparent')),
+        color: markBg ? this.dayInk(mark) : (isToday ? '#ff453a' : '#fff'),
+        ring: isSel ? '0 0 0 2px #fff' : 'none',
+        tsh: markBg && this.dayInk(mark) === '#fff' ? '0 1px 2px rgba(0,0,0,0.55)' : 'none',
+        tiquetDot: mark && mark.tiquet ? this.orange : 'transparent',
+        onClick: () => this.setState({ open: true, sel: id, period: null }),
+      });
+    }
+    return { key: year + '-' + month, label: MESOS[month] + (month === 0 ? ' ' + year : ''), cells };
+  }
+
+  set(mark) {
+    const id = this.state.sel; if (!id) return;
+    this.setState(s => ({ marks: { ...s.marks, [id]: s.marks[id] === mark ? undefined : mark } }));
+  }
+
+  renderVals() {
+    const months = [];
+    let y = 2026, m = 8;
+    for (let i = 0; i < 5; i++) { months.push(this.monthData(y, m)); m++; if (m > 11) { m = 0; y++; } }
+    const id = this.state.sel;
+    const day = (id && this.state.marks[id]) || {};
+    const per = this.state.period;
+    const cur = per ? day[per] : undefined;
+    let sheetTitle = '';
+    if (id) { const p = id.split('-').map(Number); sheetTitle = p[2] + ' ' + MESOS[p[1]].toLowerCase(); }
+
+    const PL = { dia: 'Dia', nit: 'Nit' };
+    const HINT = { dia: 'Matí i tarda', nit: 'Vespre i nit' };
+    const periods = ['dia','nit'].map(k => {
+      const v = day[k];
+      const c = this.colorOf(v);
+      return {
+        key: k, label: PL[k], hint: HINT[k], arrow: '›', arrowInk: '#48484a',
+        value: v === 'AD' ? 'Andorra' : v === 'ES' ? 'Espanya' : 'Sense marcar',
+        chip: c || 'rgba(255,255,255,0.12)',
+        valueInk: c || '#8e8e93',
+        onClick: () => this.setState({ period: k }),
+      };
+    });
+    const tiquetOn = !!day.tiquet;
+    periods.push({
+      key: 'tiquet', label: 'Tiquet', hint: 'Marca el dia sencer',
+      value: tiquetOn ? 'Activat' : 'Desactivat',
+      chip: tiquetOn ? this.orange : 'rgba(255,255,255,0.12)',
+      valueInk: tiquetOn ? this.orange : '#8e8e93',
+      arrow: tiquetOn ? '✓' : '○', arrowInk: tiquetOn ? this.orange : '#48484a',
+      onClick: () => {
+        const i = this.state.sel; if (!i) return;
+        this.setState(s => {
+          const d3 = { ...(s.marks[i] || {}) };
+          d3.tiquet = !d3.tiquet;
+          return { marks: { ...s.marks, [i]: d3 } };
+        });
+      },
+    });
+
+    const counts = { AD: 0, ES: 0 };
+    Object.values(this.state.marks).forEach(d2 => {
+      if (!d2) return;
+      ['dia','nit'].forEach(k => { if (d2[k]) counts[d2[k]]++; });
+    });
+    const totalFr = counts.AD + counts.ES;
+    const pctAD = totalFr ? Math.round(counts.AD / totalFr * 100) : 0;
+    const pctES = totalFr ? 100 - pctAD : 0;
+    const fmtDays = n => (n / 2).toFixed(1).replace(/\.0$/, '').replace('.', ',');
+    const daysAD = fmtDays(counts.AD);
+    const daysES = fmtDays(counts.ES);
+    const fr = n => n + (n === 1 ? ' franja marcada' : ' franges marcades');
+    const a = this.state.alt;
+    const dim = 'rgba(255,255,255,0.055)';
+
+    return {
+      months,
+      weekdays: ['Dl','Dt','Dc','Dj','Dv','Ds','Dg'].map((label, i) => ({ key: i, label })),
+      headerMonth: 'Setembre', headerYear: '2026',
+      open: this.state.open,
+      sheetTitle,
+      periods,
+      showPeriods: !per,
+      showCountry: !!per,
+      periodTitle: per ? PL[per] : '',
+      back: () => this.setState({ period: null }),
+      close: () => this.setState({ open: false, period: null }),
+      pickAndorra: () => this.setPeriod('AD'),
+      pickEspanya: () => this.setPeriod('ES'),
+      clearDay: () => { const i = this.state.sel; this.setState(s => ({ marks: { ...s.marks, [i]: {} } })); },
+      andorraBg: cur === 'AD' ? this.green : 'rgba(255,255,255,0.07)',
+      andorraBorder: cur === 'AD' ? this.green : 'rgba(255,255,255,0.1)',
+      andorraInk: cur === 'AD' ? '#000' : this.green,
+      andorraCheck: cur === 'AD' ? '✓' : '',
+      espanyaBg: cur === 'ES' ? this.red : 'rgba(255,255,255,0.07)',
+      espanyaBorder: cur === 'ES' ? this.red : 'rgba(255,255,255,0.1)',
+      espanyaInk: cur === 'ES' ? '#fff' : this.red,
+      espanyaCheck: cur === 'ES' ? '✓' : '',
+
+      altDateLabel: 'Diumenge 13 de setembre',
+      altPickAndorra: null,
+      altPickEspanya: null,
+      altAndorraBg: dim,
+      altAndorraBorder: 'rgba(255,255,255,0.12)',
+      altAndorraInk: this.green,
+      altAndorraSub: '#8e8e93',
+      altAndorraDot: 'transparent',
+      altAndorraDotInk: 'transparent',
+      altAndorraCheck: '',
+      altAndorraDays: daysAD + (daysAD === '1' ? ' dia equivalent' : ' dies equivalents'),
+      altAndorraPct: pctAD + '%',
+      altAndorraCount: fr(counts.AD),
+      altEspanyaBg: dim,
+      altEspanyaBorder: 'rgba(255,255,255,0.12)',
+      altEspanyaInk: this.red,
+      altEspanyaSub: '#8e8e93',
+      altEspanyaDot: 'transparent',
+      altEspanyaDotInk: 'transparent',
+      altEspanyaCheck: '',
+      altEspanyaDays: daysES + (daysES === '1' ? ' dia equivalent' : ' dies equivalents'),
+      altEspanyaPct: pctES + '%',
+      altEspanyaCount: fr(counts.ES),
+    };
+  }
+}
+</script>
+</body>
+</html>

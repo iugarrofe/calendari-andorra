@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Calendari AD/ES</title>
+<meta name="description" content="Controla els teus dies a Andorra i Espanya.">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Calendari">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- SCREEN: AVUI -->
+  <section id="screen-today" class="screen" data-screen="today">
+    <div class="today-topbar safe-top">
+      <div class="today-eyebrow" id="today-label">Avui</div>
+      <div class="today-title" id="today-title">—</div>
+    </div>
+    <div class="today-grid">
+      <button class="today-card" id="card-andorra" data-country="AD">
+        <div class="today-card-dot" id="dot-andorra"></div>
+        <div class="today-card-name">Andorra</div>
+        <div class="today-card-row">
+          <span class="today-card-days" id="days-andorra">0</span>
+          <span class="today-card-pct" id="pct-andorra">0%</span>
+        </div>
+        <div class="today-card-count" id="count-andorra">0 franges marcades</div>
+      </button>
+      <button class="today-card" id="card-espanya" data-country="ES">
+        <div class="today-card-dot" id="dot-espanya"></div>
+        <div class="today-card-name">Espanya</div>
+        <div class="today-card-row">
+          <span class="today-card-days" id="days-espanya">0</span>
+          <span class="today-card-pct" id="pct-espanya">0%</span>
+        </div>
+        <div class="today-card-count" id="count-espanya">0 franges marcades</div>
+      </button>
+    </div>
+    <div class="today-hint">Toca una targeta per marcar avui sencer · les xifres són de l'any en curs</div>
+  </section>
+
+  <!-- SCREEN: CALENDARI -->
+  <section id="screen-calendar" class="screen hidden" data-screen="calendar">
+    <div class="cal-header safe-top">
+      <div class="cal-year-row">
+        <button id="year-prev" class="year-btn" aria-label="Any anterior">‹</button>
+        <div class="cal-year" id="cal-year">2026</div>
+        <button id="year-next" class="year-btn" aria-label="Any següent">›</button>
+      </div>
+      <div class="weekday-row" id="weekday-row"></div>
+    </div>
+    <div class="cal-scroll" id="cal-scroll"></div>
+  </section>
+
+  <!-- TAB BAR -->
+  <nav class="tabbar safe-bottom">
+    <button class="tab-btn active" data-tab="today">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3l8 6v12H4V9l8-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span>Avui</span>
+    </button>
+    <button class="tab-btn" data-tab="calendar">
+      <svg viewBox="0 0 24 24" width="24" height="24"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 9.5h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Calendari</span>
+    </button>
+  </nav>
+
+  <!-- BOTTOM SHEET -->
+  <div id="sheet-backdrop" class="sheet-backdrop hidden"></div>
+  <div id="sheet" class="sheet hidden">
+    <div class="sheet-grip"></div>
+    <div class="sheet-head">
+      <div class="sheet-title" id="sheet-title">—</div>
+      <button class="sheet-done" id="sheet-done">Fet</button>
+    </div>
+    <div class="sheet-subtitle" id="sheet-subtitle">—</div>
+
+    <div id="sheet-periods" class="sheet-periods"></div>
+
+    <div id="sheet-country" class="sheet-country hidden">
+      <button class="back-link" id="sheet-back">‹ Dia · Nit</button>
+      <button class="country-card" id="pick-andorra" data-country="AD">
+        <span class="country-name">Andorra</span>
+        <span class="country-check" id="check-andorra"></span>
+      </button>
+      <button class="country-card" id="pick-espanya" data-country="ES">
+        <span class="country-name">Espanya</span>
+        <span class="country-check" id="check-espanya"></span>
+      </button>
+    </div>
+
+    <button class="sheet-clear" id="sheet-clear">Esborra</button>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
